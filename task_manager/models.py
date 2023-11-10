@@ -20,6 +20,10 @@ class Worker(AbstractUser):
         related_name="workers"
     )
 
+    class Meta:
+        verbose_name = "worker"
+        verbose_name_plural = "workers"
+
     def __str__(self) -> str:
         return f"{self.position} : {self.first_name} {self.last_name}"
 
