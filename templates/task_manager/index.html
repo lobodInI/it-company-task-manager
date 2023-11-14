@@ -1,15 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>IT Task Manager Home</h1>
-    <p>Welcome to Best Task Manager!</p>
-    <h2>Dynamic content</h2>
-    <p>The Manager service has the following record counts:</p>
+  <h1><b>Welcome to IT Task Manager!</b></h1>
+    <p>
+    This task manager is a web-based application designed to help users organize
+      and keep track of their tasks efficiently. Users can add, edit,
+      and mark tasks as completed. The user interface is clean and user-friendly,
+      providing a seamless experience for managing daily tasks.
+    </p>
     <ul>
-        <li><strong>Workers:</strong> {{ num_workers }}</li>
-        <li><strong>Tasks:</strong> {{ num_tasks }}</li>
-        <li><strong>Task types:</strong> {{ num_task_types }}</li>
-        <li><strong>Worker position:</strong> {{ num_worker_positions }}</li>
+        <li><strong>Currently completed tasks:</strong> {{ completed_task }}</li>
+        <li><strong>Unfinished tasks:</strong> {{ unfinished_task }}</li>
+      <br>
+        <li><strong>Number of workers who are engaged in solving problems:</strong> {{ num_workers }}</li>
     </ul>
 
 {% endblock %}
