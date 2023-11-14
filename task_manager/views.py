@@ -8,8 +8,13 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from task_manager.forms import PositionSearchForm, TaskTypeSearchForm, WorkerSearchForm, WorkerCreationForm, \
-    TaskSearchForm
+from task_manager.forms import (
+    PositionSearchForm,
+    TaskTypeSearchForm,
+    WorkerSearchForm,
+    WorkerCreationForm,
+    TaskSearchForm,
+)
 from task_manager.models import Position, Worker, TaskType, Task
 
 
@@ -23,9 +28,11 @@ def index(request: HttpRequest) -> HttpResponse:
     context = {
         "completed_task": completed_task,
         "unfinished_task": unfinished_task,
-        "num_workers": num_workers
+        "num_workers": num_workers,
     }
-    return render(request=request, template_name="task_manager/index.html", context=context)
+    return render(
+        request=request, template_name="task_manager/index.html", context=context
+    )
 
 
 class PositionListView(LoginRequiredMixin, generic.ListView):
@@ -35,9 +42,7 @@ class PositionListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs) -> Dict:
         context = super(PositionListView, self).get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
-        context["search_form"] = PositionSearchForm(
-            initial={"name": name}
-        )
+        context["search_form"] = PositionSearchForm(initial={"name": name})
         return context
 
     def get_queryset(self) -> QuerySet:
@@ -72,18 +77,14 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs) -> Dict:
         context = super(WorkerListView, self).get_context_data(**kwargs)
         username = self.request.GET.get("username", "")
-        context["search_form"] = WorkerSearchForm(
-            initial={"username": username}
-        )
+        context["search_form"] = WorkerSearchForm(initial={"username": username})
         return context
 
     def get_queryset(self) -> QuerySet:
         queryset = Worker.objects.all()
         form = WorkerSearchForm(self.request.GET)
         if form.is_valid():
-            return queryset.filter(
-                username__icontains=form.cleaned_data["username"]
-            )
+            return queryset.filter(username__icontains=form.cleaned_data["username"])
         return queryset
 
 
@@ -111,9 +112,7 @@ class TaskTypeListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs) -> Dict:
         context = super(TaskTypeListView, self).get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
-        context["search_form"] = TaskTypeSearchForm(
-            initial={"name": name}
-        )
+        context["search_form"] = TaskTypeSearchForm(initial={"name": name})
         return context
 
     def get_queryset(self) -> QuerySet:
@@ -150,9 +149,7 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs) -> Dict:
         context = super(TaskListView, self).get_context_data(**kwargs)
         name = self.request.GET.get("name", "")
-        context["search_form"] = TaskSearchForm(
-            initial={"name": name}
-        )
+        context["search_form"] = TaskSearchForm(initial={"name": name})
         return context
 
     def get_queryset(self) -> QuerySet:

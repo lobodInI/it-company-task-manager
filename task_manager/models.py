@@ -16,9 +16,7 @@ class Position(models.Model):
 
 class Worker(AbstractUser):
     position = models.ForeignKey(
-        to=Position,
-        on_delete=models.CASCADE,
-        related_name="workers"
+        to=Position, on_delete=models.CASCADE, related_name="workers"
     )
 
     class Meta:
@@ -47,7 +45,7 @@ class Task(models.Model):
         ("UR", "Urgent"),
         ("HG", "High"),
         ("MD", "Medium"),
-        ("LW", "Low")
+        ("LW", "Low"),
     ]
     name = models.CharField(max_length=255)
     description = models.TextField()
@@ -55,14 +53,9 @@ class Task(models.Model):
     is_completed = models.BooleanField(default=False)
     priority = models.CharField(max_length=2, choices=priority_choises)
     task_type = models.ForeignKey(
-        to=TaskType,
-        on_delete=models.CASCADE,
-        related_name="tasks"
+        to=TaskType, on_delete=models.CASCADE, related_name="tasks"
     )
-    assignees = models.ManyToManyField(
-        to=get_user_model(),
-        related_name="tasks"
-    )
+    assignees = models.ManyToManyField(to=get_user_model(), related_name="tasks")
 
     def __str__(self) -> str:
         return self.name
