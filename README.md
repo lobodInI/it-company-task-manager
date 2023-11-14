@@ -55,7 +55,7 @@ To install IT Task Manager, follow these steps:
 
 ## Usage Guide
 
-1. Sign in.
+1. Sign in | Sing up.
 2. Add an employee position.
 3. Add tasks type.
 4. Add new tasks, edit existing ones and mark them as completed.
