@@ -23,7 +23,9 @@ def index(request: HttpRequest) -> HttpResponse:
 
     completed_task = Task.objects.filter(is_completed=True).count()
     unfinished_task = Task.objects.filter(is_completed=False).count()
-    num_workers = Worker.objects.filter(tasks__is_completed=False).distinct().count()
+    num_workers = Worker.objects.filter(
+        tasks__is_completed=False
+    ).distinct().count()
 
     context = {
         "completed_task": completed_task,
@@ -31,7 +33,9 @@ def index(request: HttpRequest) -> HttpResponse:
         "num_workers": num_workers,
     }
     return render(
-        request=request, template_name="task_manager/index.html", context=context
+        request=request,
+        template_name="task_manager/index.html",
+        context=context
     )
 
 
@@ -75,16 +79,22 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
     paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs) -> Dict:
-        context = super(WorkerListView, self).get_context_data(**kwargs)
+        context = super(
+            WorkerListView, self
+        ).get_context_data(**kwargs)
         username = self.request.GET.get("username", "")
-        context["search_form"] = WorkerSearchForm(initial={"username": username})
+        context["search_form"] = WorkerSearchForm(
+            initial={"username": username}
+        )
         return context
 
     def get_queryset(self) -> QuerySet:
         queryset = Worker.objects.all()
         form = WorkerSearchForm(self.request.GET)
         if form.is_valid():
-            return queryset.filter(username__icontains=form.cleaned_data["username"])
+            return queryset.filter(
+                username__icontains=form.cleaned_data["username"]
+            )
         return queryset
 
 
@@ -190,4 +200,6 @@ def toggle_assign_to_task(request, pk):
         worker.tasks.remove(pk)
     else:
         worker.tasks.add(pk)
-    return HttpResponseRedirect(reverse_lazy("task_manager:task-detail", args=[pk]))
+    return HttpResponseRedirect(reverse_lazy(
+        "task_manager:task-detail", args=[pk])
+    )

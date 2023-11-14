@@ -55,7 +55,10 @@ class Task(models.Model):
     task_type = models.ForeignKey(
         to=TaskType, on_delete=models.CASCADE, related_name="tasks"
     )
-    assignees = models.ManyToManyField(to=get_user_model(), related_name="tasks")
+    assignees = models.ManyToManyField(
+        to=get_user_model(),
+        related_name="tasks"
+    )
 
     def __str__(self) -> str:
         return self.name
