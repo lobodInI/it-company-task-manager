@@ -16,7 +16,11 @@ class Position(models.Model):
 
 class Worker(AbstractUser):
     position = models.ForeignKey(
-        to=Position, on_delete=models.CASCADE, related_name="workers"
+        to=Position,
+        on_delete=models.CASCADE,
+        related_name="workers",
+        null=True,
+        blank=True
     )
 
     class Meta:
