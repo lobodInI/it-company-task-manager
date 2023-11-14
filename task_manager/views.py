@@ -103,7 +103,7 @@ class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
     queryset = Worker.objects.all().prefetch_related("tasks__task_type")
 
 
-class WorkerCreateView(LoginRequiredMixin, generic.CreateView):
+class WorkerCreateView(generic.CreateView):
     model = Worker
     form_class = WorkerCreationForm
 
