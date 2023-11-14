@@ -19,7 +19,6 @@ from task_manager.models import Position, Worker, TaskType, Task
 
 
 def index(request: HttpRequest) -> HttpResponse:
-    """View function for the home page of the site."""
 
     completed_task = Task.objects.filter(is_completed=True).count()
     unfinished_task = Task.objects.filter(is_completed=False).count()
@@ -100,7 +99,7 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
 
 class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
     model = Worker
-    queryset = Worker.objects.all().prefetch_related("tasks__task_type")
+    queryset = Worker.objects.prefetch_related("tasks__task_type")
 
 
 class WorkerCreateView(generic.CreateView):
@@ -196,7 +195,7 @@ def toggle_assign_to_task(request, pk):
     worker = Worker.objects.get(id=request.user.id)
     if (
         Task.objects.get(id=pk) in worker.tasks.all()
-    ):  # probably could check if task exists
+    ):
         worker.tasks.remove(pk)
     else:
         worker.tasks.add(pk)
