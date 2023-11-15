@@ -34,9 +34,12 @@
   <hr>
   <ul>
     {% for worker in task.assignees.all %}
-      <li>{{ worker.username }} ({{ worker.first_name }} {{ worker.last_name }}): {{ worker.position }}</li>
+      <li>
+        <a href="{{ worker.get_absolute_url }}">{{ worker.username }}</a>
+        ({{ worker.first_name }} {{ worker.last_name }})
+      </li>
     {% empty %}
-      <p>No workers.</p>
+      <p>No assignees.</p>
     {% endfor %}
   </ul>
 {% endblock %}
