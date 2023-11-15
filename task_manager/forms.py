@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.forms import SelectDateWidget
 
-from task_manager.models import Worker
+from task_manager.models import Worker, Task
 
 
 class PositionSearchForm(forms.Form):
@@ -46,3 +47,16 @@ class WorkerCreationForm(UserCreationForm):
         fields = UserCreationForm.Meta.fields + (
             "first_name", "last_name", "position"
         )
+
+
+class TaskCreateForm(forms.ModelForm):
+    deadline = forms.DateField(
+        label="deadline",
+        required=True,
+        widget=forms.DateInput(format="%Y-%m-%d", attrs={"type": "date"}),
+        input_formats=["%Y-%m-%d"]
+    )
+
+    class Meta:
+        model = Task
+        fields = "__all__"
