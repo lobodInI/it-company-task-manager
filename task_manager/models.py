@@ -8,7 +8,7 @@ class Position(models.Model):
     name = models.CharField(max_length=255)
 
     class Meta:
-        ordering = ["name"]
+        ordering = ["id"]
 
     def __str__(self) -> str:
         return self.name
@@ -24,6 +24,7 @@ class Worker(AbstractUser):
     )
 
     class Meta:
+        ordering = ["id"]
         verbose_name = "worker"
         verbose_name_plural = "workers"
 
@@ -63,6 +64,9 @@ class Task(models.Model):
         to=get_user_model(),
         related_name="tasks"
     )
+
+    class Meta:
+        ordering = ["id"]
 
     def __str__(self) -> str:
         return self.name
