@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Task list
+    <a href="{% url 'task_manager:task-create' %}" class="btn btn-primary link-to-page">
+      Create task
+    </a>
+    <a href="{% url 'task_manager:task-type-list' %}" class="btn btn-info link-to-page">
+      Show all task types
+    </a>
+  </h1>
+  <br>
+    {% block search_form %}
+      {% include "includes/search_form.html" %}
+    {% endblock %}
+  <br>
+  {% if task_list %}
+    <b>Completed task</b>
+    <ul class="completed-task">
+      {% for task in task_list %}
+        {% if task.is_completed %}
+          <li>
+            <a href="{% url "task_manager:task-detail" pk=task.id %}">{{ task.name }}</a>
+            ({{ task.description }})
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+    <b>Task in progress</b>
+    <ul class="unfinished-task">
+      {% for task in task_list %}
+        {% if not task.is_completed %}
+          <li>
+            <a href="{% url "task_manager:task-detail" pk=task.id %} ">{{ task.name }}</a>
+            ({{ task.description }})
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no task in manager.</p>
+  {% endif %}
+{% endblock %}

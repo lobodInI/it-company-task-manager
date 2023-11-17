@@ -1,0 +1,14 @@
+<header class="site-header sticky-top py-1">
+  <nav class="container d-flex flex-column flex-md-row justify-content-between">
+    <a style="border: white solid" class="py-2" href="{% url 'task_manager:index' %}">Home</a>
+    <a class="py-2" href="{% url 'task_manager:worker-list' %}">Workers</a>
+    <a class="py-2" href="{% url 'task_manager:task-list' %}">Tasks</a>
+    <a class="py-2" href="https://github.com/lobodInI/it-company-task-manager/tree/main">Project on GitHub</a>
+    {% if user.is_authenticated %}
+      <a class="py-2 login" href="{{ user.get_absolute_url }}">User: {{ user.get_username }}</a>
+      <a class="py-2" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
+    {% else %}
+      <a class="py-2 login" href="{% url 'login'%}?next={{request.path}}">Login</a>
+  {% endif %}
+  </nav>
+</header>
